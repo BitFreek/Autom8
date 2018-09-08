@@ -24,7 +24,7 @@ import sys
 # Import packages and parse arguments                                          #
 #                                                                              #
 ################################################################################    
-import traceback, os, errno, random, time, datetime, argparse, pygame
+import traceback, os, errno, random, time, datetime, argparse, pygame, xml.etree.ElementTree as ET
 
 argparser = argparse.ArgumentParser(description='autom8 Anything')
 argparser.add_argument('--interactive', 
@@ -51,7 +51,7 @@ i2cBus = smbus.SMBus(1)
 i2cRecieverAddress = 0
 
 now = datetime.datetime.now()
-logFile = "/home/admin/autom8/logs/" + now.strftime("%Y%m%d") + "/" + now.strftime("%H%M%S") + ".log"
+logFile = "/home/pi/autom8/logs/" + now.strftime("%Y%m%d") + "/" + now.strftime("%H%M%S") + ".log"
 if not os.path.exists(os.path.dirname(logFile)):
     try:
         os.makedirs(os.path.dirname(logFile))
@@ -100,10 +100,21 @@ alreadyPlayed = []
 def run():
     print "Starting Main Loop"
     global numScenes, ambientTrack, sceneAudioChannels, alreadyPlayed
-    
+
+    tree = ET.parse('/home/pi/autom8/cfg/app.xml')
+    app = tree.getroot()
+    app.find('stop').text = '0'
+    tree.write('/home/pi/autom8/cfg/app.xml')
+
     while(1):
+        tree = ET.parse('/home/pi/autom8/cfg/app.xml')
+        app = tree.getroot()
+        if app.find('stop').text == '1':
+            log('App Stop!')
+            break
+
         sceneID = readSceneID()
-        
+
         # Check for reset
         if len(alreadyPlayed) > 0 and sceneID == 0:
             log('RESET')
@@ -149,7 +160,7 @@ def playTrack(trackName):
     if pygame.mixer.music.get_busy():
         pygame.mixer.music.fadeout(1000)
 
-    path = os.path.join("/home/admin/autom8/media/audio", trackName)
+    path = os.path.join("/home/pi/autom8/media/audio", trackName)
     pygame.mixer.music.load(path)
     pygame.mixer.music.set_volume(1.0)
     pygame.mixer.music.play()
@@ -195,6 +206,8 @@ try:
     pygame.init()
     
     run()
+    GPIO.cleanup()
+    pygame.mixer.music.stop()
 except:
     traceback.print_exc()
     GPIO.cleanup()

@@ -49,7 +49,7 @@ usage()
 m8_start()
 {
 	fprint "\nStarting Autom8 App"
-	sudo python /home/admin/autom8/app/autom8/main.py $1
+	python /home/pi/autom8/app/autom8/main.py $1 &>/home/pi/autom8/logs/errout.log &
 	
 	fprint "\nStarting Autom8 Web"
 }
@@ -57,6 +57,13 @@ m8_start()
 m8_update()
 {
 	fprint "Checking for updates..."
+}
+
+m8_stop()
+{
+	fprint "\nStopping Autom8 App"
+	echo '<app><stop>1</stop></app>' > /home/pi/autom8/cfg/app.xml
+	fprint "\nStopping Autom8 Web"
 }
 
 ##### MAIN #####
@@ -81,6 +88,8 @@ while [ "$1" != "" ]; do
                                 ;;
         start )           		command="start"
                                 ;;
+	stop )				command="stop"
+				;;
         update )           		command="update"
                                 ;;
         * )                     usage
@@ -98,6 +107,8 @@ case $command in
 	start )			m8_start "$appArgs"
 					;;
 	update )		m8_update
+					;;
+	stop )			m8_stop
 					;;
 	* )				err "$command is an invalid command!"
 					usage

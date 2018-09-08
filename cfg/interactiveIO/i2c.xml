@@ -6,7 +6,7 @@
 	</port0>
 	<port1>
 		<address0>
-			2
+			0
 		</address0>
 	</port1>
 </i2c>

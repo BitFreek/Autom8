@@ -19,7 +19,7 @@ class GPIO:
         root.text = "0"
         tree = ET.ElementTree(root)
         try:
-        	tree.write("/home/admin/autom8/cfg/interactiveIO/GPIO/pin" + str(pin) + ".xml")
+        	tree.write("/home/pi/autom8/cfg/interactiveIO/GPIO/pin" + str(pin) + ".xml")
         	cls.pins[pin] = type
         	return 1
         except ET.ParseError:
@@ -33,7 +33,7 @@ class GPIO:
             root.text = "1" if value else "0"
             tree = ET.ElementTree(root)
             try:
-            	tree.write("/home/admin/autom8/cfg/interactiveIO/GPIO/pin" + str(pin) + ".xml")
+            	tree.write("/home/pi/autom8/cfg/interactiveIO/GPIO/pin" + str(pin) + ".xml")
             	return 1
             except ET.ParseError:
             	print("GPIO Error: output failed for " + str(pin))
