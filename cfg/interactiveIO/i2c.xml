@@ -1,0 +1,12 @@
+<i2c>
+	<port0>
+		<address0>
+			0
+		</address0>	
+	</port0>
+	<port1>
+		<address0>
+			2
+		</address0>
+	</port1>
+</i2c>
