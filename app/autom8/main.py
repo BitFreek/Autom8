@@ -75,19 +75,7 @@ sceneAudioChannels = [
     {'scene': 'K', 'channel': 11, 'track': "10 - Cage.mp3"},
     {'scene': 'L', 'channel': 12, 'track': "11 - Chop Shop.mp3"},
     {'scene': 'M', 'channel': 13, 'track': ""},
-    {'scene': 'N', 'channel': 14, 'track': ""},
-    {'scene': 'O', 'channel': 15, 'track': ""},
-    {'scene': 'P', 'channel': 16, 'track': ""},
-    {'scene': 'Q', 'channel': 17, 'track': ""},
-    {'scene': 'R', 'channel': 18, 'track': ""},
-    {'scene': 'S', 'channel': 19, 'track': ""},
-    {'scene': 'T', 'channel': 20, 'track': ""},
-    {'scene': 'U', 'channel': 21, 'track': ""},
-    {'scene': 'V', 'channel': 22, 'track': ""},
-    {'scene': 'W', 'channel': 23, 'track': ""},
-    {'scene': 'X', 'channel': 24, 'track': ""},
-    {'scene': 'Y', 'channel': 25, 'track': ""},
-    {'scene': 'Z', 'channel': 26, 'track': ""}
+    {'scene': 'N', 'channel': 14, 'track': ""}
 ]
 
 alreadyPlayed = []
@@ -137,6 +125,15 @@ def run():
         # If not doing anything else play ambient
         if not pygame.mixer.music.get_busy():
             playTrack(ambientTrack)
+
+        # check for comunication error
+        if sceneID == -1:
+            GPIO.output(24, False)
+            for x in range(5):
+                GPIO.output(25, True)
+                time.sleep(0.25)
+                GPIO.output(25, False)
+                time.sleep(0.25)
             
         # Update status LED
         if len(alreadyPlayed) == numScenes:
@@ -171,8 +168,29 @@ def playTrack(trackName):
 #                                                                              #
 ################################################################################        
 def readSceneID():
-    sceneID = i2cBus.read_byte(i2cRecieverAddress)
-    return sceneID
+    retry = 0
+    while retry < 5:
+        try:
+    	    sceneID = i2cBus.read_byte(i2cRecieverAddress)
+            return sceneID
+        except:
+            retry+=1
+    return -1
+
+###############################################################################
+#                                                                             #
+# Write id to i2c                                                             #
+#                                                                             #
+###############################################################################
+def writeID(id):
+    retry = 0
+    while retry < 5:
+        try:
+            i2cBus.write_byte(i2cRecieverAddress, id)
+            return 1
+        except:
+            retry += 1
+    return 0
 
 ################################################################################
 #                                                                              #
