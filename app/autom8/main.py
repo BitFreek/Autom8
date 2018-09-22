@@ -59,23 +59,23 @@ if not os.path.exists(os.path.dirname(logFile)):
         if exc.errno != errno.EEXIST:
             raise
 
-numScenes = 12
+numScenes = 14
 ambientTrack = "Ambient.mp3"
 sceneAudioChannels = [
-    {'scene': 'A', 'channel': 1,  'track': "00 - Welcome.mp3"},
-    {'scene': 'B', 'channel': 2,  'track': "01 - Hill Pumpkin Shack.mp3"},
-    {'scene': 'C', 'channel': 3,  'track': "02 - Steampunk.mp3"},
-    {'scene': 'D', 'channel': 4,  'track': "03 - Hunters Shack.mp3"},
-    {'scene': 'E', 'channel': 5,  'track': "04 - Witches.mp3"},
-    {'scene': 'F', 'channel': 6,  'track': "05 - Town Loop.mp3"},
-    {'scene': 'G', 'channel': 7,  'track': "06 - Clown.mp3"},
-    {'scene': 'H', 'channel': 8,  'track': "07 - Headless Horseman.mp3"},
-    {'scene': 'I', 'channel': 9,  'track': "08 - Sawmill.mp3"},
-    {'scene': 'J', 'channel': 10, 'track': "09 - Graveyard.mp3"},
-    {'scene': 'K', 'channel': 11, 'track': "10 - Cage.mp3"},
-    {'scene': 'L', 'channel': 12, 'track': "11 - Chop Shop.mp3"},
-    {'scene': 'M', 'channel': 13, 'track': ""},
-    {'scene': 'N', 'channel': 14, 'track': ""}
+    {'scene': 'A', 'channel': 1,  'track': "01.mp3"},
+    {'scene': 'B', 'channel': 2,  'track': "02.mp3"},
+    {'scene': 'C', 'channel': 3,  'track': "03.mp3"},
+    {'scene': 'D', 'channel': 4,  'track': "04.mp3"},
+    {'scene': 'E', 'channel': 5,  'track': "05.mp3"},
+    {'scene': 'F', 'channel': 6,  'track': "06.mp3"},
+    {'scene': 'G', 'channel': 7,  'track': "07.mp3"},
+    {'scene': 'H', 'channel': 8,  'track': "08.mp3"},
+    {'scene': 'I', 'channel': 9,  'track': "09.mp3"},
+    {'scene': 'J', 'channel': 10, 'track': "10.mp3"},
+    {'scene': 'K', 'channel': 11, 'track': "11.mp3"},
+    {'scene': 'L', 'channel': 12, 'track': "12.mp3"},
+    {'scene': 'M', 'channel': 13, 'track': "13.mp3"},
+    {'scene': 'N', 'channel': 14, 'track': "14.mp3"}
 ]
 
 alreadyPlayed = []
@@ -176,21 +176,6 @@ def readSceneID():
         except:
             retry+=1
     return -1
-
-###############################################################################
-#                                                                             #
-# Write id to i2c                                                             #
-#                                                                             #
-###############################################################################
-def writeID(id):
-    retry = 0
-    while retry < 5:
-        try:
-            i2cBus.write_byte(i2cRecieverAddress, id)
-            return 1
-        except:
-            retry += 1
-    return 0
 
 ################################################################################
 #                                                                              #
