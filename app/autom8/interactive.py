@@ -33,17 +33,17 @@ try:
         print "\r",
         
         try:
-            pin20 = ET.parse('/home/admin/autom8/cfg/interactiveIO/GPIO/pin20.xml').getroot().text.strip()
+            pin20 = ET.parse('/home/pi/autom8/cfg/interactiveIO/GPIO/pin20.xml').getroot().text.strip()
         except ET.ParseError:
             pin20 = 0
         
         try:
-            pin24 = ET.parse('/home/admin/autom8/cfg/interactiveIO/GPIO/pin24.xml').getroot().text.strip()
+            pin24 = ET.parse('/home/pi/autom8/cfg/interactiveIO/GPIO/pin24.xml').getroot().text.strip()
         except ET.ParseError:
             pin24 = 0
         
         try:
-            pin25 = ET.parse('/home/admin/autom8/cfg/interactiveIO/GPIO/pin25.xml').getroot().text.strip()
+            pin25 = ET.parse('/home/pi/autom8/cfg/interactiveIO/GPIO/pin25.xml').getroot().text.strip()
         except ET.ParseError:
             pin25 = 0
         

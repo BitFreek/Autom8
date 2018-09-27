@@ -59,7 +59,7 @@ if not os.path.exists(os.path.dirname(logFile)):
         if exc.errno != errno.EEXIST:
             raise
 
-numScenes = 14
+numScenes = 11
 ambientTrack = "Ambient.mp3"
 sceneAudioChannels = [
     {'scene': 'A', 'channel': 1,  'track': "01.mp3"},
@@ -70,12 +70,9 @@ sceneAudioChannels = [
     {'scene': 'F', 'channel': 6,  'track': "06.mp3"},
     {'scene': 'G', 'channel': 7,  'track': "07.mp3"},
     {'scene': 'H', 'channel': 8,  'track': "08.mp3"},
-    {'scene': 'I', 'channel': 9,  'track': "09.mp3"},
-    {'scene': 'J', 'channel': 10, 'track': "10.mp3"},
-    {'scene': 'K', 'channel': 11, 'track': "11.mp3"},
-    {'scene': 'L', 'channel': 12, 'track': "12.mp3"},
-    {'scene': 'M', 'channel': 13, 'track': "13.mp3"},
-    {'scene': 'N', 'channel': 14, 'track': "14.mp3"}
+    {'scene': 'I', 'channel': 9,  'track': "10.mp3"},
+    {'scene': 'J', 'channel': 10, 'track': "11.mp3"},
+    {'scene': 'K', 'channel': 11, 'track': "14.mp3"}
 ]
 
 alreadyPlayed = []
@@ -109,6 +106,7 @@ def run():
             pygame.mixer.music.fadeout(1000)
             alreadyPlayed = []
             GPIO.output(20, True)
+            
         
         # Check for scene trigger
         for index, member in enumerate(sceneAudioChannels):
@@ -126,7 +124,7 @@ def run():
         if not pygame.mixer.music.get_busy():
             playTrack(ambientTrack)
 
-        # check for comunication error
+        # check for communication error
         if sceneID == -1:
             GPIO.output(24, False)
             for x in range(5):
@@ -155,7 +153,7 @@ def playTrack(trackName):
     log(trackName)
 
     if pygame.mixer.music.get_busy():
-        pygame.mixer.music.fadeout(1000)
+        pygame.mixer.music.fadeout(100)
 
     path = os.path.join("/home/pi/autom8/media/audio", trackName)
     pygame.mixer.music.load(path)
