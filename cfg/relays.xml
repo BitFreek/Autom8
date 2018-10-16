@@ -1,8 +1,14 @@
 <relays>
-	<Relay1>
+	<steplight>
 		19
-	</Relay1>
-	<Relay2>
+	</steplight>
+	<redlightstrip>
 		18
-	</Relay2>
+	</redlightstrip>
+    <greenlightstrip>
+        17
+    </greenlightstrip>
+    <bluelightstrip>
+        16
+    </bluelightstrip>
 </relays>

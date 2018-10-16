@@ -1,5 +1,8 @@
 <buttons>
-	<Button1>
+	<reset>
 		23
-	</Button1>
+	</reset>
+    <welcome>
+        24
+    </welcome>
 </buttons>

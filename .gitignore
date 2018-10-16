@@ -122,6 +122,7 @@ nbproject
 .idea
 web/.node_history
 dump.rdb
+__pycache__
 
 web/npm-debug.log
 lib-cov
@@ -129,3 +130,4 @@ lib-cov
 *.log
 *.out
 *.pid
+*.pyc

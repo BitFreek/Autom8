@@ -1,68 +1,63 @@
+<!--**************************************************************************
+    |                                                                        |
+    | The Show                                                               |
+    |     |-> Idle Time                                                      |
+    |         |-> Effects[]                                                  |
+    |     |-> Scenes[]                                                       |
+    |         |-> Triggers[]                                                 |
+    |         |-> Effects[]                                                  |
+    |             |-> Triggers[]                                             |
+    |                                                                        |    
+    |                                                                        |    
+    | Effect List                                                            |
+    |     reset-show                                                         |
+    |     relay                                                              |
+    |     play-audio                                                         |
+    |     play-video                                                         |
+    |     send-rf                                                            |
+    |                                                                        |    
+    |                                                                        |    
+    |                                                                        |    
+    | Trigger List                                                           |
+    |     receive-rf                                                         |
+    |     button                                                             |
+    |     motion                                                             |
+    |                                                                        |
+    **************************************************************************-->
+    
 <BrimstoneHayride>
 	<scenes>
-		<Reset>
+		<reset>
 			<triggers>
-				<recieve-signal>
-					0
-				</recieve-signal>
+				<receive-rf>0</receive-rf>
+                <button>reset</button>
 			</triggers>
 			<effects>
-				<relay-on>
-					Relay1
-				</relay-on>
 				<reset-show></reset-show>
+                <relay name="steplight">on</relay>
+                <relay name="redlightstrip">on</relay>
+                <relay name="greenlightstrip">on</relay>
+                <relay name="bluelightstrip">on</relay>
 			</effects>
-		</Reset>
-		<Rules>
-			<triggers>
-				<button-push>
-					Button1
-				</button-push>
-				<recieve-signal>
-					1
-				</recieve-signal>
-			</triggers>
-			<effects>
-				<play-audio>
-					welcome.mp3
-				</play-audio>
-				<relay-off>
-					Relay1
-				</relay-off>
-			</effects>
-		</Rules>
-		<Castle>
-			<triggers>
-				<recieve-signal>
-					2
-				</recieve-signal>
-			</triggers>
-			<effects>
-				<play-audio>
-					castle.mp3
-				</play-audio>
-				<send-signal delay="15000">
-					100
-				</send-signal>
-				<relay-strobe on-signal="101">
-					Relay2
-				</relay-strobe>
-				<relay-flash on-signal="101">
-					Relay1
-				</relay-flash>
-			</effects>
-		</Castle>
-		<Gallows>
-			<triggers>
-				<recieve-signal>
-					3
-				</recieve-signal>
-			</triggers>
-			<effects>
-				<play-audio>
-					gallows.mp3
-				</play-audio>
-			</effects>
-		</Gallows>
+		</reset>
+        <welcome>
+            <triggers>
+                <recieive-rf>1</recieive-rf>
+                <button>welcome</button>
+            </triggers>
+            <effects>
+                <play-audio>welcome.mp3</play-audio>
+            </effects>
+        </welcome>
+        <castle>
+            <triggers>
+                <recieive-rf>2</recieive-rf>
+            </triggers>
+            <effects>
+                <play-audio>castle.mp3</play-audio>
+                <send-rf duration="3">100</send-rf>
+                <send-rf delay="30" duration="3">101</send-rf>
+            </effects>
+        </castle>
 	</scenes>
 </BrimstoneHayride>
